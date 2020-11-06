@@ -3,7 +3,7 @@ from discord.ext import commands
 
 client = commands.Bot(command_prefix = '?')
 
-TOKEN = "NzY0ODcwMTI0NjUzMTE3NDYw.X4Mi0A.w5l5wKxbmcO1KMU2kwn2YPOZY1E"
+TOKEN = "INSERT TOKEN HERE"
 
 @client.event
 async def on_ready():
