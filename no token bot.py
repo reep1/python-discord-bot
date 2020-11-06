@@ -1,9 +1,14 @@
 import discord
+import json
 from discord.ext import commands
 
-client = commands.Bot(command_prefix = '?')
+with open('./config.json') as f:
+  data = json.load(f)
+  for c in data['botConfig']:
+     print('Prefix: ' + c['prefix'])
+     print('Token: ' + c['token'])
 
-TOKEN = "INSERT TOKEN HERE"
+client = commands.Bot(command_prefix = c['prefix'])
 
 @client.event
 async def on_ready():
@@ -19,4 +24,4 @@ async def say(ctx, message):
        
    await ctx.send(f'{ctx.author.name} said {message}')
 
-client.run(TOKEN)
+client.run(c['token'])
