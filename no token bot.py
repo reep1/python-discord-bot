@@ -1,6 +1,7 @@
 import discord
 import json
 from discord.ext import commands
+from discord.ext.commands import has_permissions
 
 with open('./config.json') as f:
   data = json.load(f)
@@ -30,18 +31,29 @@ async def ssay(ctx, message):
    await ctx.send(f'{message}')
 
 @client.command()
+@has_permissions(kick_members=True)
 async def kick(ctx, member : discord.Member, *, reason = None):
 
    await member.kick(reason = reason)
    await ctx.send(f'Successfully kicked {member.mention}')
 
+@kick.error
+async def kick_error(error, ctx):
+       await ctx.send("Invalid Permissions")
+
 @client.command()
+@has_permissions(ban_members=True)
 async def ban(ctx, member : discord.Member, *, reason = None):
 
    await member.ban(reason = reason)
    await ctx.send(f'Successfully banned {member.mention}')
 
+@ban.error
+async def ban_error(error, ctx):
+       await ctx.send("Invalid Permissions")
+
 @client.command()
+@has_permissions(ban_members=True)
 async def unban(ctx, *, member):
    _busers = await ctx.guild.bans()
    _bname, member_discriminator = member.split('#')
@@ -53,5 +65,9 @@ async def unban(ctx, *, member):
          await ctx.guild.unban(user)
          await ctx.send(f'Successfully unbanned {user.name}')
          return
+
+@unban.error
+async def unban_error(error, ctx):
+       await ctx.send("Invalid Permissions")
 
 client.run(c['token'])
