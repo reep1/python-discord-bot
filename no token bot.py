@@ -25,6 +25,11 @@ async def say(ctx, message):
    await ctx.send(f'{ctx.author.name} said {message}')
 
 @client.command()
+async def ssay(ctx, message):
+       
+   await ctx.send(f'{message}')
+
+@client.command()
 async def kick(ctx, member : discord.Member, *, reason = None):
 
    await member.kick(reason = reason)
